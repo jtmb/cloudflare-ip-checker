@@ -1,0 +1,86 @@
+- name: "Provision Enviorment"
+  strategy: linear
+  hosts: localhost
+  become: true
+  vars_files:
+    - vars.yml
+  tasks:
+
+# Get Facts
+  - name: Collect Server private IP and register to var
+    shell: "ip -4 a show eth0 | grep 'inet 1' | cut -d '/' -f 1 | cut -d 't' -f2 | cut -b 2-"
+    register: private_server_ip
+
+  - name: Display private_server_ip
+    debug:
+      msg: "{{ private_server_ip.stdout }}"
+
+  - name: Collect Server Public IP and register to var
+    shell: "curl 'https://api.ipify.org?format=txt'"
+    register: public_server_ip
+
+  - name: Display public_server_ip
+    debug:
+      msg: "{{ public_server_ip.stdout }}"
+
+# Make cloudflare DNS API request and register vars
+  - name: Check for active Record and register cloudflare_server_ip_uncut VAR
+    uri:
+      url: "https://api.cloudflare.com/client/v4/zones/{{ cf_zone_id }}/dns_records?type=A&name=carlos.branconet.com"
+      method: GET
+      body_format: json    
+      headers:
+        Authorization: "bearer {{ cf_key }}"
+        Content-Type: "application/json"
+    register: cloudflare_dns_record
+
+  - name: Register IP and cut value
+    debug:
+      msg: "{{ cloudflare_dns_record | json_query('*.result[].content') | replace('[', '') | replace(']', '') |replace(\"'\",'') }}"
+    register: cloudflare_server_ip
+
+  - name: Register ID and cut value to var
+    debug:
+      msg: "{{ cloudflare_dns_record | json_query('*.result[].id') }}"
+    register: cloudflare_server_id
+
+  - name: Display cloudflare_server_id
+    debug:
+      msg: "{{ cloudflare_server_id.msg | replace('[', '') | replace(']', '') |replace(\"'\",'') }}"
+
+
+# Delete old record if cloudflare_server_ip is different then public_server_ip 
+  - name: Delete Old Record
+    uri:
+      url: "https://api.cloudflare.com/client/v4/zones/{{ cf_zone_id }}/dns_records/{{ cloudflare_server_id.msg | replace('[', '') | replace(']', '') |replace(\"'\",'') }}"
+      method: DELETE
+      body: '{"type":"A","name":"carlos.branconet.com","content":"{{ public_server_ip.stdout }}","ttl":1,"proxied":true}'
+      body_format: json
+      headers:
+        Authorization: "bearer {{ cf_key }}"
+        Content-Type: "application/json"
+    register: A_proxied_result
+    when: cloudflare_server_ip.msg != public_server_ip.stdout
+
+
+# Update record if cloudflare_server_ip is different then public_server_ip 
+  - name: Update new proxied A record
+    uri:
+      url: "https://api.cloudflare.com/client/v4/zones/{{ cf_zone_id }}/dns_records"
+      method: POST
+      body: '{"type":"A","name":"carlos.branconet.com","content":"{{ public_server_ip.stdout }}","ttl":1,"proxied":true}'
+      body_format: json
+      headers:
+        Authorization: "bearer {{ cf_key }}"
+        Content-Type: "application/json"
+    register: A_proxied_result
+    when: cloudflare_server_ip.msg != public_server_ip.stdout
+
+  - name: Show new result
+    debug:
+      msg: "{{cloudflare_server_ip.msg}}"
+
+# 142.188.74.171
+
+  - name: Discord Webhook to notify (Post as bot)
+    shell: 'curl -i -H "Accept: application/json" -H "Content-Type:application/json" -X POST --data "{\"content\": \"beep boop - Your Public IP has changed from {{cloudflare_server_ip.msg}} to {{public_server_ip.stdout}} - Cloudflare DNS Records have been updated. \"}" {{discord_webhook}}'
