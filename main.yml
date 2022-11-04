@@ -22,6 +22,7 @@
     shell: "curl 'https://api.ipify.org?format=txt'"
     register: public_server_ip
 
+
 # Make cloudflare DNS API request and register vars
   - name: Check for active Record and register cloudflare_dns_record VAR
     uri:
@@ -44,6 +45,11 @@
       msg: "{{ cloudflare_dns_record | json_query('*.result[].id') }}"
     register: cloudflare_server_id
     no_log: true
+
+  - name: Output message if ip value did not chage for {{a_name_record}}
+    debug:
+      msg: " ! T H I S - R E C O R D - I S - U P - TO - D A T E - A L R E A D Y ! "
+    when: cloudflare_server_ip.msg == public_server_ip.stdout
 
 # Delete old record if cloudflare_server_ip is different then public_server_ip  - when conditions start on this block
   - name: Delete Old Record
@@ -74,11 +80,8 @@
 
   - name: Show new Cloudflare A name ip for {{a_name_record}}
     debug:
-      msg: "{{cloudflare_server_ip.msg}}"
-
-  - name: Output message if ip value did not chage
-    debug:
-      msg: " ! T H I S - R E C O R D - I S - U P - TO - D A T E - A L R E A D Y ! "
+      msg: "New IP: {{public_server_ip.stdout}}  (old)Changed: {{cloudflare_server_ip.msg}}"
+    when: cloudflare_server_ip.msg != public_server_ip.stdout
 
   - name: Discord Webhook to notify (Post as bot)
     shell: 'curl -i -H "Accept: application/json" -H "Content-Type:application/json" -X POST --data "{\"content\": \"beep boop - Your Public IP has changed from {{cloudflare_server_ip.msg}} to {{public_server_ip.stdout}} - Cloudflare DNS Records have been updated. \"}" {{discord_webhook}}'
