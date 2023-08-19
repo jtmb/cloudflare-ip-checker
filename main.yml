@@ -1,4 +1,5 @@
 - name: "Dynamic IP Change Notifier/Updater"
+  become: true
   strategy: linear
   hosts: localhost
   become: true
@@ -34,36 +35,39 @@
         Content-Type: "application/json"
     register: cloudflare_dns_record
 
+# Add A Record if it does not exist
+  - name: Add A records (DNS Only)
+    uri:
+      url: "https://api.cloudflare.com/client/v4/zones/{{ cf_zone_id }}/dns_records"
+      method: POST
+      body: '{"type":"A","name":"{{a_name_record}}","content":"{{  public_server_ip.stdout }}","ttl":1,"proxied":true}'
+      body_format: json
+      headers:
+        Authorization: "bearer {{ cf_key }}"
+        Content-Type: "application/json"
+    register: record_output
+    failed_when: 
+      - ("Record already exists." not in record_output.json.errors | map(attribute='message') | list | join("")) and 
+        (record_output.status != 200) 
+    when: cloudflare_dns_record.json.result | length == 0
+
+
   - name: Register IP from active cloudflare_dns_record and cut value, register VAR
     debug:
       msg: "{{ cloudflare_dns_record | json_query('*.result[].content') | replace('[', '') | replace(']', '') |replace(\"'\",'') }}"
     register: cloudflare_server_ip
-    no_log: true
+    no_log: false
 
   - name: Register ID from active cloudflare_dns_record and cut value, register VAR
     debug:
       msg: "{{ cloudflare_dns_record | json_query('*.result[].id') }}"
     register: cloudflare_server_id
-    no_log: true
+    no_log: false
 
   - name: Output message if ip value did not chage for {{a_name_record}}
     debug:
       msg: " ! T H I S - R E C O R D - I S - U P - TO - D A T E - A L R E A D Y ! "
     when: cloudflare_server_ip.msg == public_server_ip.stdout
-
-# Delete old record if cloudflare_server_ip is different then public_server_ip  - when conditions start on this block
-  - name: Delete Old Record
-    uri:
-      url: "https://api.cloudflare.com/client/v4/zones/{{ cf_zone_id }}/dns_records/{{ cloudflare_server_id.msg | replace('[', '') | replace(']', '') |replace(\"'\",'') }}"
-      method: DELETE
-      body: '{"type":"A","name":"{{a_name_record}}","content":"{{ public_server_ip.stdout }}","ttl":1,"proxied":true}'
-      body_format: json
-      headers:
-        Authorization: "bearer {{ cf_key }}"
-        Content-Type: "application/json"
-    register: A_proxied_result
-    when: cloudflare_server_ip.msg != public_server_ip.stdout
-
 
 # Update record if cloudflare_server_ip is different then public_server_ip 
   - name: Update new proxied A record
