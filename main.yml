@@ -3,6 +3,8 @@
   strategy: linear
   hosts: localhost
   become: true
+  vars_files:
+   - vars.yml
   tasks:
 
   - name: Create a logs directory if it does not exist
