@@ -19,7 +19,7 @@
 <summary>Table of Contents</summary>
 
 - [About](#about)
-  - [Built With](#built-with)
+  - [Prerequisites](#prerequisites)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Usage](#usage)
@@ -55,7 +55,8 @@ Useful for self hosters on a dynamic IP adress that wish to keep their cloudflar
 - A Cloudflare API Key
 - The ZONE ID for your Cloudflare instance
 
-## Running on docker
+### <h2>Getting Started</h2>
+### Running on docker
 A simple docker run command gets your instance running. 
 
     docker run --name ip-checker-container \
@@ -67,7 +68,7 @@ A simple docker run command gets your instance running.
     -e DNS_RECORDS="my.site.com/A site.com/A" \
     -e REQUEST_TIME_SECONDS=120 \
     jtmb92/cloudflare-ip-checker
-## Running on docker-compose
+### Running on docker-compose
 Run on docker compose (this is the reccomened way) by running the command "docker compose up -d"
 
     version: '3.8'
@@ -84,7 +85,7 @@ Run on docker compose (this is the reccomened way) by running the command "docke
         - DNS_RECORDS=my.site.com/A site.com/A
         - REQUEST_TIME_SECONDS=120
 
-## Running on docker-compose with custom dockerfile
+### Running on docker-compose with custom dockerfile
 Simmilar to the above example, the key difference here being we are running with the build: arg insteead of the image: arg. 
 This "." essentually builds the docker image from a local dockerfile located in the root directory of where the docker compose up -d command was ran.
 
@@ -102,7 +103,7 @@ This "." essentually builds the docker image from a local dockerfile located in 
         - DNS_RECORDS=my.site.com/A site.com/A
         - REQUEST_TIME_SECONDS=120
 
-## Running on swarm
+### Running on swarm
 **Meant for advanced users**
 example using the loki driver to ingress logging over a custom docker network, while securely passing in ENV vars.
 
@@ -134,9 +135,6 @@ example using the loki driver to ingress logging over a custom docker network, w
     container-swarm-network:
         external: true
 
-# Cloudflare IP Checker Environment Variables
-
-This guide explains the environment variables used in the Dockerized Cloudflare IP Checker script and their purposes.
 
 ## Environment Variables explained
 
