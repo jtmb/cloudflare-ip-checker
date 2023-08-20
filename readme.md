@@ -37,14 +37,17 @@
 
 ### <h1>About</h1>
 
-A docker alpine based microservice that automates updating of cloudflare records when it detects that your internet public forwards facing IP has changed.
+An Alpine-based microservice within Docker, designed to seamlessly manage and update Cloudflare records whenever a change is detected in your publicly-facing internet IP address.
 
-Useful for self hosters on a dynamic IP adress that wish to keep their cloudflare DNS records from going down. 
+This solution proves invaluable for those who self-host using a dynamic IP address, ensuring the uninterrupted integrity of their Cloudflare DNS records.
 
--  Features the ability to add monitored A records if they have been removed
--  Automatic detection of forward facing IP Change that updates A records with new IP address
--  Simple and customizable through a few enviorment variables
--  Support for aleting through discord
+### Highlighted Features:
+
+- Streamlined addition of monitored A records in cases of removal.
+- Automatic identification of changes in forward-facing IP, facilitating the prompt update of A records with the new IP address.
+- User-friendly customization achieved through a concise set of environment variables.
+- Integration with Discord for simple alert notifications.
+
 
 ## Prerequisites
 
