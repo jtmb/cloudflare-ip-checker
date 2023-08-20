@@ -36,7 +36,7 @@
     register: cloudflare_dns_record
 
 # Add A Record if it does not exist
-  - name: Add A records (DNS Only)
+  - name: Add A records (Proxied)
     uri:
       url: "https://api.cloudflare.com/client/v4/zones/{{ cf_zone_id }}/dns_records"
       method: POST
@@ -68,6 +68,20 @@
     debug:
       msg: " ! T H I S - R E C O R D - I S - U P - TO - D A T E - A L R E A D Y ! "
     when: cloudflare_server_ip.msg == public_server_ip.stdout
+
+# Delete old record if cloudflare_server_ip is different then public_server_ip  - when conditions start on this block
+  - name: Delete Old Record
+    uri:
+      url: "https://api.cloudflare.com/client/v4/zones/{{ cf_zone_id }}/dns_records/{{ cloudflare_server_id.msg | replace('[', '') | replace(']', '') |replace(\"'\",'') }}"
+      method: DELETE
+      body: '{"type":"A","name":"{{a_name_record}}","content":"{{ public_server_ip.stdout }}","ttl":1,"proxied":true}'
+      body_format: json
+      headers:
+        Authorization: "bearer {{ cf_key }}"
+        Content-Type: "application/json"
+    register: A_proxied_result
+    when: cloudflare_server_ip.msg != public_server_ip.stdout
+
 
 # Update record if cloudflare_server_ip is different then public_server_ip 
   - name: Update new proxied A record
