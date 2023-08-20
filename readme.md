@@ -43,13 +43,13 @@ This solution proves invaluable for those who self-host using a dynamic IP addre
 
 ### Highlighted Features:
 
-- Streamlined addition of monitored A records in cases of removal.
-- Automatic identification of changes in forward-facing IP, facilitating the prompt update of A records with the new IP address.
-- User-friendly customization achieved through a concise set of environment variables.
-- Integration with Discord for simple alert notifications.
-- <b>Fast</b> - request time on average is less than a second.
-- <b>Space Efficient</b> - Alpine Container keeps the image size bellow 20 megabytes.
-- <b>Scaleable</b> - Built with scale in mind, docker swarm compatiable.
+- <span style="color:#57AD98"><b>Streamlined addition of monitored A records</b></span> in cases of accidental removal.
+- <span style="color:#FA8072"><b>Automatic identification of changes in forward-facing IP</b></span>, facilitating the prompt update of A records with the new IP address.
+- <span style="color:#9E57DA"><b>User-friendly customization</b></span> achieved through a concise set of environment variables.
+- <span style="color:#7289d9"><b>Integration with Discord</b></span> for simple alert notifications.
+- <span style="color:#CD5C5C"><b>Fast</b></span> - API request total time on average is less than a second.
+- <span style="color:#FFA500"><b>lightweight</b></span>- Alpine Container keeps the image size bellow 20 megabytes.
+- <span style="color:green"><b>Scaleable</b></span> - Built with scale in mind, docker swarm compatiable.
 
 
 ## Prerequisites
