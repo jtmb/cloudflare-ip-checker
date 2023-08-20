@@ -8,11 +8,11 @@
   <b>Cloudflare IP Checker</b> - Keep your cloudflare proxy records automatically updated!
   <br />
   <br />
-  <a href="https://github.com/dec0dOS/amazing-github-template/issues/new?assignees=&labels=bug&template=01_BUG_REPORT.md&title=bug%3A+">Report a Bug</a>
+  <a href="https://github.com/jtmb/ip_check/issues/new?assignees=&labels=bug&title=bug%3A+">Report a Bug</a>
   ·
-  <a href="https://github.com/dec0dOS/amazing-github-template/issues/new?assignees=&labels=enhancement&template=02_FEATURE_REQUEST.md&title=feat%3A+">Request a Feature</a>
+  <a href="https://github.com/jtmb/ip_check/issues/new?assignees=&labels=enhancement&template=02_FEATURE_REQUEST.md&title=feat%3A+">Request a Feature</a>
   .
-  <a href="https://github.com/dec0dOS/amazing-github-template/discussions">Ask a Question</a>
+  <a href="https://hub.docker.com/repository/docker/jtmb92/cloudflare_ip_checker/general">Docker Hub</a>
 </div>
 <br>
 <details open="open">
@@ -84,7 +84,6 @@ Run on docker compose (this is the reccomened way) by running the command "docke
           API_KEY: 'your-cloudflare-api-key'
           ZONE_ID: 'your-cloudflare-zone-id'
           WEBHOOK_URL: 'your-discord-webhook-url'
-          PUBLIC_IP: 'your-public-ip'
           DNS_RECORDS: 'my.site.com/A site.com/A'
           REQUEST_TIME_SECONDS: '120'
 ```
@@ -103,7 +102,6 @@ This "." essentually builds the docker image from a local dockerfile located in 
           API_KEY: 'your-cloudflare-api-key'
           ZONE_ID: 'your-cloudflare-zone-id'
           WEBHOOK_URL: 'your-discord-webhook-url'
-          PUBLIC_IP: 'your-public-ip'
           DNS_RECORDS: 'my.site.com/A site.com/A'
           REQUEST_TIME_SECONDS: '120'
 ```
@@ -144,27 +142,27 @@ example using the loki driver to ingress logging over a custom docker network, w
 
 The following environment variables are used to configure and run the Cloudflare IP Checker script:
 ```yaml
-    EMAIL: your-email@example.com
+    EMAIL: 'your-email@example.com'
 ```  
 Your Cloudflare account email address. This is used to authenticate with the Cloudflare API.
 ```yaml
-    API_KEY: your-cloudflare-api-key
+    API_KEY: 'your-cloudflare-api-key'
 ```     
 Your Cloudflare API key. This key is required for making authenticated requests to the Cloudflare API.
 ```yaml
-    ZONE_ID: 
+    ZONE_ID: 'your-cloudflare-zome-id'
 ```      
 The ID of the Cloudflare DNS zone where your records are managed. This identifies the specific zone to update.
 ```yaml
-    WEBHOOK_URL: 
+    WEBHOOK_URL: 'https://discord.com/api/webhooks/<redacted>/<redacted>'
 ```     
 The URL of your Discord webhook. This is where notifications will be sent when IP changes are detected.
 ```yaml
-    DNS_RECORDS:
+    DNS_RECORDS: 'my.site.com/A site.com/A' #example of multiple list format entries
 ```      
  A space-separated list of Cloudflare DNS records in the format "name/type". These records will be checked and updated if necessary.
 ```yaml
-    REQUEST_TIME: 
+    REQUEST_TIME_SECONDS: '120' #amount of time in seconds between next set of API requests. 
 ```    
 The time in seconds to wait between IP checks. This determines the interval at which the script checks for IP changes.
 
