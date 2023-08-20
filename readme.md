@@ -72,7 +72,6 @@ A simple docker run command gets your instance running.
     -e API_KEY="your-cloudflare-api-key" \
     -e ZONE_ID="your-cloudflare-zone-id" \
     -e WEBHOOK_URL="your-discord-webhook-url" \
-    -e PUBLIC_IP="your-public-ip" \
     -e DNS_RECORDS="my.site.com/A site.com/A" \
     -e REQUEST_TIME_SECONDS=120 \
     jtmb92/cloudflare-ip-checker
