@@ -185,7 +185,7 @@ You can use [markdownlint-cli](https://github.com/igorshubovych/markdownlint-cli
 
 ## License
 
-This project is licensed under the **MIT license**. Feel free to edit and distribute this template as you like.
+This project is licensed under the **GNU GENERAL PUBLIC LICENSE v3**. Feel free to edit and distribute this template as you like.
 
 See [LICENSE](LICENSE) for more information.
 
