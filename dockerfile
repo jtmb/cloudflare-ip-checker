@@ -5,7 +5,7 @@ FROM alpine:latest
 WORKDIR /data/cloudflare-ip-checker
 
 # Install necessary packages (curl and jq)
-RUN apk --no-cache add curl jq bash git
+RUN apk --no-cache add curl jq bash
 
 # Copy the scripts to the container
 COPY runner.sh /data/cloudflare-ip-checker/runner.sh
@@ -13,9 +13,6 @@ COPY entrypoint.sh /data/cloudflare-ip-checker/entrypoint.sh
 
 # Make the script executable
 RUN chmod +x /data/cloudflare-ip-checker/runner.sh /data/cloudflare-ip-checker/entrypoint.sh
-
-# Cleanup 
-RUN apk del git
 
 # Create log file dir
 RUN mkdir /data/logs

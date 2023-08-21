@@ -18,14 +18,14 @@ WHITE="\033[1;37m"
 YELLOW="\033[38;5;220m"
 RESET="\033[0m"
 
+# Make Public IP Consumable by other processes by writting it to environment on run time.
+echo "PUBLIC_IP=$PUBLIC_IP" >> /etc/environment
+
 # Welcome message
 echo -e "${BOLD}${GREEN}CLOUDFLARE IP CHECKER RUNNING!${RESET}"
 echo -e "${WHITE}${BOLD}Repository: ${CYAN}${repo_url}${RESET}"
 
 while true; do
-  PUBLIC_IP=$(curl -s https://api.ipify.org)  # Get the current public IP
-  OLD_PUBLIC_IP="$PUBLIC_IP"
-  IP_CHANGED=false
   RECORD_UPDATED=false
   UPDATED_RECORDS=()    # Array to store updated or added records
 
@@ -131,14 +131,15 @@ EMBED_MESSAGE='{
 }'
 
 
-  if [ "$IP_CHANGED" == true ] || [ "$RECORD_UPDATED" == true ]; then
+  if [ "$RECORD_UPDATED" == true ]; then
     curl -s -H "Content-Type: application/json" -X POST -d "$EMBED_MESSAGE" "$WEBHOOK_URL"
 
     echo ------------------------------------------------------------------
     echo -e "${WHITE}${BOLD}Discord Embed Message${RESET} Sent for:${WHITE}${GREEN} $name${RESET} "
     echo ----------------------------------------------------------------------
   fi
-
-  sleep "$REQUEST_TIME_SECONDS"  # Sleep for the specified time interval before the next loop
+  
+  sleep "$REQUEST_TIME"  # Sleep for the specified time interval before the next loop
+  sed -i '/PUBLIC_IP=/d' /etc/environment #Cleanup Env before next loop in the event IP has changed.
 done
 

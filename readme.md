@@ -5,7 +5,7 @@
 </h1>
 
 <div align="center">
-  <b>Cloudflare IP Checker</b> - Keep your cloudflare proxy records automatically updated!
+  <b>Cloudflare IP Checker</b> - Keep your Cloudflare proxy records automatically updated!
   <br />
   <br />
   <a href="https://github.com/jtmb/ip_check/issues/new?assignees=&labels=bug&title=bug%3A+">Report a Bug</a>
@@ -22,11 +22,11 @@
   - [Prerequisites](#prerequisites)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
-    - [Docker image](#docker-image)
-    - [Running on docker](#running-on-docker)
-    - [Running on docker-compose](#running-on-docker-compose)
-    - [Running on docker swarm](#running-on-docker-swarm)
-- [Environment Variables explained](#environment-variables-explained)
+    - [Docker Image](#docker-image)
+    - [Running on Docker](#running-on-docker)
+    - [Running on Docker Compose](#running-on-docker-compose)
+    - [Running on Docker Swarm](#running-on-docker-swarm)
+- [Environment Variables Explained](#environment-variables-explained)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -44,26 +44,25 @@ This solution proves invaluable for those who self-host using a dynamic IP addre
 ### Highlighted Features:
 
 - <b>Streamlined addition of monitored A records</b> in cases of accidental removal.
-- <b>Automatic identification of changes in forward-facing IP</b>facilitating the prompt update of A records with the new IP address.
+- <b>Automatic identification of changes in the forward-facing IP</b> facilitating the prompt update of A records with the new IP address.
 - <b>User-friendly customization</b> achieved through a concise set of environment variables.
 - <b>Integration with Discord</b> for simple alert notifications.
 - <b>Fast</b> - API request total time on average is less than a second.
-- <b>lightweight</b>- Alpine Container keeps the image size bellow 20 megabytes.
-- <b>Scaleable</b> - Built with scale in mind, docker swarm compatiable.
+- <b>Lightweight</b> - Alpine Container keeps the image size below 15 MB.
+- <b>Scalable</b> - Built with scale in mind, Docker Swarm compatible.
 
-#### Example: 
+#### Example:
 
-<img src="src/img/example.png" alt="Example" style="border-radius: 10px;">
+![Example](src/img/example.png)
 
 #### Discord Alerting:
 
-<img src="src/img/discord.png" alt="Discord" style="border-radius: 10px;">
-
+![Discord](src/img/discord.png)
 
 ## Prerequisites
 
 - Docker installed on your system
-- A Discord webhook url
+- A Discord webhook URL
 - A Cloudflare API Key
 - The ZONE ID for your Cloudflare instance
 
@@ -73,7 +72,7 @@ This solution proves invaluable for those who self-host using a dynamic IP addre
  docker pull jtmb92/cloudflare-ip-checker
 ```
 ### Running on docker
-A simple docker run command gets your instance running. 
+A simple docker run command gets your instance running.
 ```docker
     docker run --name ip-checker-container \
     -e EMAIL="your-email@example.com" \
@@ -85,7 +84,7 @@ A simple docker run command gets your instance running.
     jtmb92/cloudflare-ip-checker
 ```
 ### Running on docker-compose
-Run on docker compose (this is the reccomened way) by running the command "docker compose up -d"
+Run on Docker Compose (this is the recommended way) by running the command "docker compose up -d".
 ```yaml
     version: '3.8'
 
@@ -98,12 +97,11 @@ Run on docker compose (this is the reccomened way) by running the command "docke
           ZONE_ID: 'your-cloudflare-zone-id'
           WEBHOOK_URL: 'your-discord-webhook-url'
           DNS_RECORDS: 'my.site.com/A site.com/A'
-          REQUEST_TIME_SECONDS: '120'
+          REQUEST_TIME: '2m'
 ```
 
 ### Running on docker-compose with custom dockerfile
-Simmilar to the above example, the key difference here being we are running with the build: arg insteead of the image: arg. 
-This "." essentually builds the docker image from a local dockerfile located in the root directory of where the docker compose up -d command was ran.
+Similar to the above example, the key difference here is that we are running with the build: argument instead of the image: argument. The . essentially builds the Docker image from a local Dockerfile located in the root directory where the docker compose up -d command was run.
 ```yaml
     version: '3.8'
 
@@ -116,11 +114,11 @@ This "." essentually builds the docker image from a local dockerfile located in 
           ZONE_ID: 'your-cloudflare-zone-id'
           WEBHOOK_URL: 'your-discord-webhook-url'
           DNS_RECORDS: 'my.site.com/A site.com/A'
-          REQUEST_TIME_SECONDS: '120'
+          REQUEST_TIME: '120'
 ```
 ### Running on swarm
 **Meant for advanced users**
-example using the loki driver to ingress logging over a custom docker network, while securely passing in ENV vars.
+Here's an example using the Loki driver to ingress logging over a custom Docker network while securely passing in ENV vars.
 ```yaml
     version: "3.8"
     services:
@@ -134,7 +132,7 @@ example using the loki driver to ingress logging over a custom docker network, w
             ZONE_ID: ${cf_zone_id}
             WEBHOOK_URL: ${discord_webook}
             DNS_RECORDS: 'my.site.com/A site.com/A'
-            REQUEST_TIME_SECONDS: "120"
+            REQUEST_TIME: "5m"
             EMAIL: ${email}
         deploy:
         replicas: 1
@@ -155,7 +153,6 @@ jtmb92/cloudflare_ip_checker
 
 ## Environment Variables explained
 
-The following environment variables are used to configure and run the Cloudflare IP Checker script:
 ```yaml
     EMAIL: 'your-email@example.com'
 ```  
@@ -175,11 +172,14 @@ The URL of your Discord webhook. This is where notifications will be sent when I
 ```yaml
     DNS_RECORDS: 'my.site.com/A site.com/A' #example of multiple list format entries
 ```      
- A space-separated list of Cloudflare DNS records in the format "name/type". These records will be checked and updated if necessary.
+A space-separated list of Cloudflare DNS records in the format "name/type". These records will be checked and updated if necessary.
 ```yaml
-    REQUEST_TIME_SECONDS: '120' #amount of time in seconds between next set of API requests. 
+    REQUEST_TIME: '10' #amount of time in seconds between next set of API requests. 
+    REQUEST_TIME: '2m'  #amount of time in minutes between next set of API requests. 
+    REQUEST_TIME: '1h'  #amount of time in hours between next set of API requests. 
+    REQUEST_TIME: '1d'  #amount of time in days between next set of API requests. 
 ```    
-The time in seconds to wait between IP checks. This determines the interval at which the script checks for IP changes.
+The time to wait between IP checks. This determines the interval at which the script checks for IP changes.
 
 - ** <b>Make sure to provide the appropriate values for these variables when running the Docker container. This information is crucial for the script to function correctly.</b>
 
@@ -193,8 +193,6 @@ Please try to create bug reports that are:
 - _Specific._ Include as much detail as possible: which version, what environment, etc.
 - _Unique._ Do not duplicate existing opened issues.
 - _Scoped to a Single Bug._ One bug per report.
-
-You can use [markdownlint-cli](https://github.com/igorshubovych/markdownlint-cli) to check for common markdown style inconsistency.
 
 ## License
 
