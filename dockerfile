@@ -8,6 +8,7 @@ WORKDIR /data/cloudflare-ip-checker
 RUN apk --no-cache add curl jq bash git
 
 # Copy the script to the container
+
 # To build from repo:
 # RUN git clone https://github.com/jtmb/clouflare-ip-checker.git /data/cloudflare-ip-checker
 
