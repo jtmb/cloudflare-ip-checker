@@ -118,7 +118,7 @@ services:
             DNS_RECORDS: 'my.site.com/A site.com/A'
             REQUEST_TIME: '120'
 ```
-### Running on swarm
+### Running on Docker Swarm
 **Meant for advanced users**
 Here's an example using the Loki driver to ingress logging over a custom Docker network while securely passing in ENV vars.
 ```yaml
