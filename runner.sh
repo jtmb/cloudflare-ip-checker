@@ -7,6 +7,20 @@ WEBHOOK_URL="$WEBHOOK_URL"   # Discord Webhook URL
 PUBLIC_IP=$(curl -s https://api.ipify.org)   # Get the current public IP
 DNS_RECORDS=($DNS_RECORDS)   # Array of DNS records to update
 REQUEST_TIME_SECONDS="$REQUEST_TIME_SECONDS" # Request time interval in seconds
+repo_url="https://github.com/jtmb/clouflare-ip-checker"
+
+# Define colors and formatting codes
+GREEN="\033[1;32m"
+RED="\033[1;31m"
+CYAN="\033[1;36m"
+BOLD="\033[1m"
+WHITE="\033[1;37m"
+YELLOW="\033[38;5;220m"
+RESET="\033[0m"
+
+echo -e "${BOLD}${GREEN}CLOUDFLARE IP CHECKER RUNNING!${RESET}"
+echo -e "${WHITE}${BOLD}Repository: ${CYAN}${repo_url}${RESET}"
+
 
 while true; do
   PUBLIC_IP=$(curl -s https://api.ipify.org)   # Get the current public IP
@@ -46,40 +60,48 @@ while true; do
             -H "X-Auth-Key: $API_KEY" \
             -H "Content-Type: application/json" \
             --data "{\"type\":\"$type\",\"name\":\"$name\",\"content\":\"$PUBLIC_IP\",\"proxied\":true}")
-          
-          echo "Updated DNS record $name ($type) with new IP: $PUBLIC_IP"
+
+          echo ------------------------------------------------------------------
+          echo -e "${RED}${BOLD}DNS Record ${GREEN}$name ($type)${RESET} has changed. ${YELLOW}${BOLD}Updating ...${RESET}"
+          echo ----------------------------------------------------------------------
+          echo ------------------------------------------------------------------
+          echo -e "${WHITE}${BOLD}Updated DNS record ${GREEN}$name ($type)${RESET} with new IP: ${WHITE}${BOLD} $PUBLIC_IP${RESET}"
+          echo ----------------------------------------------------------------------
           RECORD_UPDATED=true
         else
-          echo "DNS record $name ($type) already up to date with IP: $PUBLIC_IP"
+          echo ------------------------------------------------------------------
+          echo -e "${WHITE}${BOLD}DNS record ${GREEN}$name ($type)${RESET} already up to date with IP: ${WHITE}${BOLD}$PUBLIC_IP${RESET}"
+          echo ----------------------------------------------------------------------
         fi
       else
         # Record doesn't exist, add new record
-        add_response=$(curl -s -X POST "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records" \
+        add_response=$(curl -s -o /dev/null -X POST "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records" \
           -H "X-Auth-Email: $EMAIL" \
           -H "X-Auth-Key: $API_KEY" \
           -H "Content-Type: application/json" \
           --data "{\"type\":\"$type\",\"name\":\"$name\",\"content\":\"$PUBLIC_IP\",\"ttl\":120,\"proxied\":true}")
         
-        echo "Added new DNS record $name ($type) with IP: $PUBLIC_IP"
+          echo ------------------------------------------------------------------
+          echo -e "${WHITE}${BOLD}New Record Detected ! ${GREEN}$name ($type)${RESET} has been ${YELLOW}${BOLD}added to Cloudflare ${RESET} with IP: ${WHITE}${BOLD}$PUBLIC_IP${RESET}"
+          echo ----------------------------------------------------------------------
         RECORD_UPDATED=true
       fi
     else
       errors=$(echo "$response" | jq -r '.errors[].message')
-      echo "Error checking DNS record $name ($type): $errors"
+          echo "----------------------------------------------------------------------"
+          echo -e "${RED}${BOLD}Error ${RESET} checking DNS record ${BOLD}$name${RESET} (${BOLD}$type${RESET}): ${YELLOW}$errors${RESET}"
+          echo "----------------------------------------------------------------------"
     fi
   done
-
-  # Check if IP address has changed
-  if [ "$PUBLIC_IP" != "$OLD_PUBLIC_IP" ]; then
-    echo "IP address has changed to $PUBLIC_IP from $OLD_PUBLIC_IP | Services will be updated"
-    OLD_PUBLIC_IP="$PUBLIC_IP"
-    IP_CHANGED=true
-  fi
 
   # Send Discord webhook notification if IP changed or record updated
   MESSAGE="beep boop - Your Public IP has changed to $PUBLIC_IP - Cloudflare DNS Records have been updated."
   if [ "$IP_CHANGED" == true ] || [ "$RECORD_UPDATED" == true ]; then
-    curl -H "Content-Type: application/json" -X POST -d "{\"content\":\"$MESSAGE\"}" "$WEBHOOK_URL"
+      curl -s -H "Content-Type: application/json" -X POST -d "{\"content\":\"$MESSAGE\"}" "$WEBHOOK_URL"
+
+      echo ------------------------------------------------------------------
+      echo -e "${WHITE}${BOLD}Discord Messasge${RESET} Sent for:${WHITE}${GREEN} $name${RESET} "
+      echo ----------------------------------------------------------------------
   fi
 
   sleep $REQUEST_TIME_SECONDS  # Sleep for the specified time interval before the next loop

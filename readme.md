@@ -51,6 +51,10 @@ This solution proves invaluable for those who self-host using a dynamic IP addre
 - <b>lightweight</b>- Alpine Container keeps the image size bellow 20 megabytes.
 - <b>Scaleable</b> - Built with scale in mind, docker swarm compatiable.
 
+Example: 
+
+<img src="example.png" alt="Alt text" style="border-radius: 10px;">
+
 
 ## Prerequisites
 
