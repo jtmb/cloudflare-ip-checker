@@ -86,67 +86,71 @@ A simple docker run command gets your instance running.
 ### Running on docker-compose
 Run on Docker Compose (this is the recommended way) by running the command "docker compose up -d".
 ```yaml
-    version: '3.8'
-
-    services:
+version: '3.8'
+services:
     ip-checker:
         image: jtmb92/cloudflare-ip-checker
+        volumes:
+         - /path/to/logs:/data/logs 
         environment:
-          EMAIL: 'your-email@example.com'
-          API_KEY: 'your-cloudflare-api-key'
-          ZONE_ID: 'your-cloudflare-zone-id'
-          WEBHOOK_URL: 'your-discord-webhook-url'
-          DNS_RECORDS: 'my.site.com/A site.com/A'
-          REQUEST_TIME: '2m'
+            EMAIL: 'your-email@example.com'
+            API_KEY: 'your-cloudflare-api-key'
+            ZONE_ID: 'your-cloudflare-zone-id'
+            WEBHOOK_URL: 'your-discord-webhook-url'
+            DNS_RECORDS: 'my.site.com/A site.com/A'
+            REQUEST_TIME: '2m'
 ```
 
 ### Running on docker-compose with custom dockerfile
 Similar to the above example, the key difference here is that we are running with the build: argument instead of the image: argument. The . essentially builds the Docker image from a local Dockerfile located in the root directory where the docker compose up -d command was run.
 ```yaml
-    version: '3.8'
-
-    services:
+version: '3.8'
+services:
     ip-checker:
         build: .
+        volumes:
+         - /path/to/logs:/data/logs 
         environment:
-          EMAIL: 'your-email@example.com'
-          API_KEY: 'your-cloudflare-api-key'
-          ZONE_ID: 'your-cloudflare-zone-id'
-          WEBHOOK_URL: 'your-discord-webhook-url'
-          DNS_RECORDS: 'my.site.com/A site.com/A'
-          REQUEST_TIME: '120'
+            EMAIL: 'your-email@example.com'
+            API_KEY: 'your-cloudflare-api-key'
+            ZONE_ID: 'your-cloudflare-zone-id'
+            WEBHOOK_URL: 'your-discord-webhook-url'
+            DNS_RECORDS: 'my.site.com/A site.com/A'
+            REQUEST_TIME: '120'
 ```
 ### Running on swarm
 **Meant for advanced users**
 Here's an example using the Loki driver to ingress logging over a custom Docker network while securely passing in ENV vars.
 ```yaml
-    version: "3.8"
-    services:
+version: "3.8"
+services:
     cloudflare-ip-checker:
         image: "jtmb92/cloudflare_ip_checker"
         restart: always
         networks:
             - container-swarm-network
+        volumes:
+         - /path/to/logs:/data/logs 
         environment:
             API_KEY:  ${cf_key}
             ZONE_ID: ${cf_zone_id}
             WEBHOOK_URL: ${discord_webook}
             DNS_RECORDS: 'my.site.com/A site.com/A'
-            REQUEST_TIME: "5m"
+            REQUEST_TIME: "2m"
             EMAIL: ${email}
         deploy:
-        replicas: 1
-        placement:
-            max_replicas_per_node: 1
+            replicas: 1
+            placement:
+                max_replicas_per_node: 1
         logging:
-        driver: loki
-        options:
-            loki-url: "http://localhost:3100/loki/api/v1/push"
-            loki-retries: "5"
-            loki-batch-size: "400"
-    networks:
+            driver: loki
+            options:
+                loki-url: "http://localhost:3100/loki/api/v1/push"
+                loki-retries: "5"
+                loki-batch-size: "400"
+networks:
     container-swarm-network:
-        external: true
+     external: true
 ```
 
 jtmb92/cloudflare_ip_checker
