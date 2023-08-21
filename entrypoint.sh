@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Export Plublic IP from /data/cloudflare-ip-checker/runner.sh to esnure public IP is checked every time script re-loops
-PUBLIC_IP="PUBLIC_IP"+
+PUBLIC_IP="PUBLIC_IP"
 
 # Set logs and Run application (sed -r) exits  the special characters in the stdout so you can get clean logs 
                         #  (tee) pushes the logs to specified log file while still maintaining output in terminal
