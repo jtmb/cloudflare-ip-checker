@@ -73,7 +73,7 @@ This solution proves invaluable for those who self-host using a dynamic IP addre
 ```
 ### Running on docker
 A simple docker run command gets your instance running.
-```docker
+```shell
 docker run --name ip-checker-container \
     -e EMAIL="your-email@example.com" \
     -e API_KEY="your-cloudflare-api-key" \
