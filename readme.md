@@ -20,8 +20,8 @@
 
 - [About](#about)
 - [Highlighted Features](#highlighted-features)
+- [Prerequisites](#prerequisites)
 - [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
     - [Docker Image](#docker-image)
     - [Running on Docker](#running-on-docker)
     - [Running on Docker Compose](#running-on-docker-compose)
