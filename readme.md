@@ -74,14 +74,14 @@ This solution proves invaluable for those who self-host using a dynamic IP addre
 ### Running on docker
 A simple docker run command gets your instance running.
 ```docker
-    docker run --name ip-checker-container \
+docker run --name ip-checker-container \
     -e EMAIL="your-email@example.com" \
     -e API_KEY="your-cloudflare-api-key" \
     -e ZONE_ID="your-cloudflare-zone-id" \
     -e WEBHOOK_URL="your-discord-webhook-url" \
     -e DNS_RECORDS="my.site.com/A site.com/A" \
     -e REQUEST_TIME=120 \
-    jtmb92/cloudflare-ip-checker
+jtmb92/cloudflare-ip-checker
 ```
 ### Running on docker-compose
 Run on Docker Compose (this is the recommended way) by running the command "docker compose up -d".
