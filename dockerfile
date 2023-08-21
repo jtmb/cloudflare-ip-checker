@@ -10,10 +10,11 @@ RUN apk --no-cache add curl jq bash git
 # Copy the script to the container
 
 # To build from repo:
-# RUN git clone https://github.com/jtmb/clouflare-ip-checker.git /data/cloudflare-ip-checker
+RUN git clone https://github.com/jtmb/clouflare-ip-checker.git /data/cloudflare-ip-checker
 
-# To build from localy:
-COPY runner.sh /data/cloudflare-ip-checker
+# # To build from localy:
+# COPY runner.sh /data/cloudflare-ip-checker
+
 # Make the script executable
 RUN chmod +x /data/cloudflare-ip-checker/runner.sh
 
