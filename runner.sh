@@ -6,7 +6,7 @@ ZONE_ID="$ZONE_ID"           # Cloudflare Zone ID
 WEBHOOK_URL="$WEBHOOK_URL"   # Discord Webhook URL
 PUBLIC_IP=$(curl -s https://api.ipify.org)  # Get the current public IP
 DNS_RECORDS=($DNS_RECORDS)   # Array of DNS records to update
-REQUEST_TIME_SECONDS="$REQUEST_TIME_SECONDS" # Request time interval in seconds
+REQUEST_TIME="$REQUEST_TIME" # Request time interval in seconds
 repo_url="https://github.com/jtmb/clouflare-ip-checker"
 
 # Define colors and formatting codes
