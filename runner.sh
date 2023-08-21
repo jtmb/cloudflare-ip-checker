@@ -94,15 +94,39 @@ while true; do
     fi
   done
 
-  # Send Discord webhook notification if IP changed or record updated
-  MESSAGE="beep boop - Your Public IP has changed to $PUBLIC_IP - Cloudflare DNS Records have been updated."
+  # Send Discord webhook notification if IP changed or records updated
   if [ "$IP_CHANGED" == true ] || [ "$RECORD_UPDATED" == true ]; then
-      curl -s -H "Content-Type: application/json" -X POST -d "{\"content\":\"$MESSAGE\"}" "$WEBHOOK_URL"
+    MESSAGE="DNS Records Update Notification:\n"
+    
+    if [ "$IP_CHANGED" == true ]; then
+      MESSAGE+="Your Public IP has changed to $PUBLIC_IP.\n"
+    fi
+    
+    if [ "$RECORD_UPDATED" == true ]; then
+      MESSAGE+="Cloudflare DNS Records have been updated:\n"
+      
+      if [ ${#added_records[@]} -gt 0 ]; then
+        MESSAGE+="\nAdded Records:\n"
+        for record in "${added_records[@]}"; do
+          MESSAGE+="- $record\n"
+        done
+      fi
+      
+      if [ ${#changed_records[@]} -gt 0 ]; then
+        MESSAGE+="\nChanged Records:\n"
+        for record in "${changed_records[@]}"; do
+          MESSAGE+="- $record\n"
+        done
+      fi
+    fi
 
-      echo ------------------------------------------------------------------
-      echo -e "${WHITE}${BOLD}Discord Messasge${RESET} Sent for:${WHITE}${GREEN} $name${RESET} "
-      echo ----------------------------------------------------------------------
+    curl -s -H "Content-Type: application/json" -X POST -d "{\"content\":\"$MESSAGE\"}" "$WEBHOOK_URL"
+
+    echo ------------------------------------------------------------------
+    echo -e "${WHITE}${BOLD}Discord Message${RESET} Sent with added and changed records."
+    echo ----------------------------------------------------------------------
   fi
+
 
   sleep $REQUEST_TIME_SECONDS  # Sleep for the specified time interval before the next loop
 done
