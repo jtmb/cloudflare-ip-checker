@@ -178,7 +178,7 @@ The URL of your Discord webhook. This is where notifications will be sent when I
 ```      
 A space-separated list of Cloudflare DNS records in the format "name/type". These records will be checked and updated if necessary.
 ```yaml
-    REQUEST_TIME: '10' #amount of time in seconds between next set of API requests. 
+    REQUEST_TIME: '10'  #amount of time in seconds between next set of API requests. 
     REQUEST_TIME: '2m'  #amount of time in minutes between next set of API requests. 
     REQUEST_TIME: '1h'  #amount of time in hours between next set of API requests. 
     REQUEST_TIME: '1d'  #amount of time in days between next set of API requests. 
