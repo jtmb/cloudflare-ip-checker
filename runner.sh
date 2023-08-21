@@ -21,14 +21,14 @@ RESET="\033[0m"
 echo -e "${BOLD}${GREEN}CLOUDFLARE IP CHECKER RUNNING!${RESET}"
 echo -e "${WHITE}${BOLD}Repository: ${CYAN}${repo_url}${RESET}"
 
-
 while true; do
-  PUBLIC_IP=$(curl -s https://api.ipify.org)   # Get the current public IP
+  PUBLIC_IP=$(curl -s https://api.ipify.org)  # Get the current public IP
   OLD_PUBLIC_IP="$PUBLIC_IP"
   IP_CHANGED=false
   RECORD_UPDATED=false
+  UPDATED_RECORDS=()    # Array to store updated or added records
 
-  # Remove duplicate entries and keep only records with current public IP
+  # Remove duplicate entries and keep only records with the current public IP
   unique_records=()
   for record in "${DNS_RECORDS[@]}"; do
     if ! echo "${unique_records[@]}" | grep -q "$record"; then
@@ -68,65 +68,75 @@ while true; do
           echo -e "${WHITE}${BOLD}Updated DNS record ${GREEN}$name ($type)${RESET} with new IP: ${WHITE}${BOLD} $PUBLIC_IP${RESET}"
           echo ----------------------------------------------------------------------
           RECORD_UPDATED=true
+          UPDATED_RECORDS+=("$name ($type)")  # Add to the list of updated records
         else
           echo ------------------------------------------------------------------
           echo -e "${WHITE}${BOLD}DNS record ${GREEN}$name ($type)${RESET} already up to date with IP: ${WHITE}${BOLD}$PUBLIC_IP${RESET}"
           echo ----------------------------------------------------------------------
         fi
       else
-        # Record doesn't exist, add new record
+        # Record doesn't exist, add a new record
         add_response=$(curl -s -o /dev/null -X POST "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records" \
           -H "X-Auth-Email: $EMAIL" \
           -H "X-Auth-Key: $API_KEY" \
           -H "Content-Type: application/json" \
           --data "{\"type\":\"$type\",\"name\":\"$name\",\"content\":\"$PUBLIC_IP\",\"ttl\":120,\"proxied\":true}")
         
-          echo ------------------------------------------------------------------
-          echo -e "${WHITE}${BOLD}New Record Detected ! ${GREEN}$name ($type)${RESET} has been ${YELLOW}${BOLD}added to Cloudflare ${RESET} with IP: ${WHITE}${BOLD}$PUBLIC_IP${RESET}"
-          echo ----------------------------------------------------------------------
+        echo ------------------------------------------------------------------
+        echo -e "${WHITE}${BOLD}New Record Detected ! ${GREEN}$name ($type)${RESET} has been ${YELLOW}${BOLD}added to Cloudflare ${RESET} with IP: ${WHITE}${BOLD}$PUBLIC_IP${RESET}"
+        echo ----------------------------------------------------------------------
         RECORD_UPDATED=true
+        UPDATED_RECORDS+=("$name ($type)")  # Add to the list of added records
       fi
     else
       errors=$(echo "$response" | jq -r '.errors[].message')
-          echo "----------------------------------------------------------------------"
-          echo -e "${RED}${BOLD}Error ${RESET} checking DNS record ${BOLD}$name${RESET} (${BOLD}$type${RESET}): ${YELLOW}$errors${RESET}"
-          echo "----------------------------------------------------------------------"
+      echo "----------------------------------------------------------------------"
+      echo -e "${RED}${BOLD}Error ${RESET} checking DNS record ${BOLD}$name${RESET} (${BOLD}$type${RESET}): ${YELLOW}$errors${RESET}"
+      echo "----------------------------------------------------------------------"
     fi
   done
 
-  # Send Discord webhook notification if IP changed or records updated
-  if [ "$IP_CHANGED" == true ] || [ "$RECORD_UPDATED" == true ]; then
-    MESSAGE="DNS Records Update Notification:\n"
-    
-    if [ "$IP_CHANGED" == true ]; then
-      MESSAGE+="Your Public IP has changed to $PUBLIC_IP.\n"
-    fi
-    
-    if [ "$RECORD_UPDATED" == true ]; then
-      MESSAGE+="Cloudflare DNS Records have been updated:\n"
-      
-      if [ ${#added_records[@]} -gt 0 ]; then
-        MESSAGE+="\nAdded Records:\n"
-        for record in "${added_records[@]}"; do
-          MESSAGE+="- $record\n"
-        done
-      fi
-      
-      if [ ${#changed_records[@]} -gt 0 ]; then
-        MESSAGE+="\nChanged Records:\n"
-        for record in "${changed_records[@]}"; do
-          MESSAGE+="- $record\n"
-        done
-      fi
-    fi
+  # Construct the list of updated or added records
+  RECORD_LIST=""
+  for updated_record in "${UPDATED_RECORDS[@]}"; do
+    name=$(echo "$updated_record" | cut -d' ' -f1)  # Extract the name part
+    RECORD_LIST+="\n- [$name](https://$name/)"  # Construct the URL
+  done
 
-    curl -s -H "Content-Type: application/json" -X POST -d "{\"content\":\"$MESSAGE\"}" "$WEBHOOK_URL"
+# Construct the Discord embed message
+EMBED_MESSAGE='{
+  "embeds": [{
+    "title": "CIC: Service Status Update",
+    "description": "💯✅ Your Cloudflare records have been updated !",
+    "color": 65280,
+    "fields": [
+      {
+        "name": "New Public IP Adress",
+        "value": "'$PUBLIC_IP'"
+      },
+      {
+        "name": "Service URL",
+        "value": "'$RECORD_LIST'"
+      },
+      {
+        "name": "Time (America/Toronto)",
+        "value": "'$(date +"%Y-%m-%d %H:%M:%S")'"
+      }
+    ],
+    "footer": {
+      "text": "'"$repo_url"'"
+    }
+  }]
+}'
+
+
+  if [ "$IP_CHANGED" == true ] || [ "$RECORD_UPDATED" == true ]; then
+    curl -s -H "Content-Type: application/json" -X POST -d "$EMBED_MESSAGE" "$WEBHOOK_URL"
 
     echo ------------------------------------------------------------------
-    echo -e "${WHITE}${BOLD}Discord Message${RESET} Sent with added and changed records."
+    echo -e "${WHITE}${BOLD}Discord Embed Message${RESET} Sent for:${WHITE}${GREEN} $name${RESET} "
     echo ----------------------------------------------------------------------
   fi
 
-
-  sleep $REQUEST_TIME_SECONDS  # Sleep for the specified time interval before the next loop
+  sleep "$REQUEST_TIME_SECONDS"  # Sleep for the specified time interval before the next loop
 done
