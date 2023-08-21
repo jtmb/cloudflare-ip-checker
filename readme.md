@@ -19,7 +19,7 @@
 <summary>Table of Contents</summary>
 
 - [About](#about)
-- [Highlighted Features](#highlighted-features)
+    - [Highlighted Features](#highlighted-features)
 - [Prerequisites](#prerequisites)
 - [Getting Started](#getting-started)
     - [Docker Image](#docker-image)
