@@ -37,7 +37,7 @@
 
 ### <h1>About</h1>
 
-An Alpine-based microservice within Docker, designed to seamlessly manage and update Cloudflare records whenever a change is detected in your publicly-facing internet IP address.
+An Alpine-based microservice within Docker, designed to seamlessly manage and update Cloudflare records whenever a change is detected in your publicly-facing IP address.
 
 This solution proves invaluable for those who self-host using a dynamic IP address, ensuring the uninterrupted integrity of their Cloudflare DNS records.
 

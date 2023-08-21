@@ -18,6 +18,7 @@ WHITE="\033[1;37m"
 YELLOW="\033[38;5;220m"
 RESET="\033[0m"
 
+# Welcome message
 echo -e "${BOLD}${GREEN}CLOUDFLARE IP CHECKER RUNNING!${RESET}"
 echo -e "${WHITE}${BOLD}Repository: ${CYAN}${repo_url}${RESET}"
 
