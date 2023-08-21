@@ -151,6 +151,8 @@ example using the loki driver to ingress logging over a custom docker network, w
         external: true
 ```
 
+jtmb92/cloudflare_ip_checker
+
 ## Environment Variables explained
 
 The following environment variables are used to configure and run the Cloudflare IP Checker script:

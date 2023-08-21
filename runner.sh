@@ -4,7 +4,7 @@ EMAIL="$EMAIL"               # Email for Cloudflare authentication
 API_KEY="$API_KEY"           # Cloudflare API Key
 ZONE_ID="$ZONE_ID"           # Cloudflare Zone ID
 WEBHOOK_URL="$WEBHOOK_URL"   # Discord Webhook URL
-PUBLIC_IP=$(curl -s https://api.ipify.org)   # Get the current public IP
+PUBLIC_IP=$(curl -s https://api.ipify.org)  # Get the current public IP
 DNS_RECORDS=($DNS_RECORDS)   # Array of DNS records to update
 REQUEST_TIME_SECONDS="$REQUEST_TIME_SECONDS" # Request time interval in seconds
 repo_url="https://github.com/jtmb/clouflare-ip-checker"
@@ -63,16 +63,16 @@ while true; do
             --data "{\"type\":\"$type\",\"name\":\"$name\",\"content\":\"$PUBLIC_IP\",\"proxied\":true}")
 
           echo ------------------------------------------------------------------
-          echo -e "${RED}${BOLD}DNS Record ${GREEN}$name ($type)${RESET} has changed. ${YELLOW}${BOLD}Updating ...${RESET}"
+          echo -e "[$(date +"%Y-%m-%d %H:%M:%S")] ${RED}${BOLD}DNS Record ${GREEN}$name ($type)${RESET} has changed. ${YELLOW}${BOLD}Updating ...${RESET}"
           echo ----------------------------------------------------------------------
           echo ------------------------------------------------------------------
-          echo -e "${WHITE}${BOLD}Updated DNS record ${GREEN}$name ($type)${RESET} with new IP: ${WHITE}${BOLD} $PUBLIC_IP${RESET}"
+          echo -e "[$(date +"%Y-%m-%d %H:%M:%S")] ${WHITE}${BOLD}Updated DNS record ${GREEN}$name ($type)${RESET} with new IP: ${WHITE}${BOLD} $PUBLIC_IP${RESET}"
           echo ----------------------------------------------------------------------
           RECORD_UPDATED=true
           UPDATED_RECORDS+=("$name ($type)")  # Add to the list of updated records
         else
           echo ------------------------------------------------------------------
-          echo -e "${WHITE}${BOLD}DNS record ${GREEN}$name ($type)${RESET} already up to date with IP: ${WHITE}${BOLD}$PUBLIC_IP${RESET}"
+          echo -e "[$(date +"%Y-%m-%d %H:%M:%S")] ${WHITE}${BOLD}DNS record ${GREEN}$name ($type)${RESET} already up to date with IP: ${WHITE}${BOLD}$PUBLIC_IP${RESET}"
           echo ----------------------------------------------------------------------
         fi
       else
@@ -84,7 +84,7 @@ while true; do
           --data "{\"type\":\"$type\",\"name\":\"$name\",\"content\":\"$PUBLIC_IP\",\"ttl\":120,\"proxied\":true}")
         
         echo ------------------------------------------------------------------
-        echo -e "${WHITE}${BOLD}New Record Detected ! ${GREEN}$name ($type)${RESET} has been ${YELLOW}${BOLD}added to Cloudflare ${RESET} with IP: ${WHITE}${BOLD}$PUBLIC_IP${RESET}"
+        echo -e "[$(date +"%Y-%m-%d %H:%M:%S")] ${WHITE}${BOLD}New Record Detected ! ${GREEN}$name ($type)${RESET} has been ${YELLOW}${BOLD}added to Cloudflare ${RESET} with IP: ${WHITE}${BOLD}$PUBLIC_IP${RESET}"
         echo ----------------------------------------------------------------------
         RECORD_UPDATED=true
         UPDATED_RECORDS+=("$name ($type)")  # Add to the list of added records
@@ -92,7 +92,7 @@ while true; do
     else
       errors=$(echo "$response" | jq -r '.errors[].message')
       echo "----------------------------------------------------------------------"
-      echo -e "${RED}${BOLD}Error ${RESET} checking DNS record ${BOLD}$name${RESET} (${BOLD}$type${RESET}): ${YELLOW}$errors${RESET}"
+      echo -e "[$(date +"%Y-%m-%d %H:%M:%S")] ${RED}${BOLD}Error ${RESET} checking DNS record ${BOLD}$name${RESET} (${BOLD}$type${RESET}): ${YELLOW}$errors${RESET}"
       echo "----------------------------------------------------------------------"
     fi
   done
@@ -141,3 +141,4 @@ EMBED_MESSAGE='{
 
   sleep "$REQUEST_TIME_SECONDS"  # Sleep for the specified time interval before the next loop
 done
+
