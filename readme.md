@@ -80,7 +80,7 @@ A simple docker run command gets your instance running.
     -e ZONE_ID="your-cloudflare-zone-id" \
     -e WEBHOOK_URL="your-discord-webhook-url" \
     -e DNS_RECORDS="my.site.com/A site.com/A" \
-    -e REQUEST_TIME_SECONDS=120 \
+    -e REQUEST_TIME=120 \
     jtmb92/cloudflare-ip-checker
 ```
 ### Running on docker-compose
