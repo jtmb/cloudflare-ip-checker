@@ -85,6 +85,7 @@ include 'dist/php/dashboard-auth.php';
               </a>
               <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                   <a href="#" class="dropdown-item">Feedback</a>
+                  <div class="dropdown-divider"></div>
                   <a href="./settings.html" class="dropdown-item">Settings</a>
                   <a href="/index.php?logout=true" class="dropdown-item">Logout</a>
               </div>
