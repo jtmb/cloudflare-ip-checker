@@ -40,7 +40,7 @@
           </button>
           <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
             <a href=".">
-              <img src="./static/logo.png" width="110" height="32" alt="Tabler" class="navbar-brand-image">
+              <img src="./static/logo.svg" width="110" height="32" alt="Tabler" class="navbar-brand-image">
             </a>
           </h1>
           <div class="navbar-nav flex-row order-md-last">
@@ -70,109 +70,13 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" /></svg>
               </a>
               <div class="nav-item dropdown d-none d-md-flex me-3">
-                <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1" aria-label="Show notifications">
+                <!-- <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1" aria-label="Show notifications"> -->
                   <!-- Download SVG icon from http://tabler-icons.io/i/bell -->
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" /><path d="M9 17v1a3 3 0 0 0 6 0v-1" /></svg>
-                  <span class="badge bg-red"></span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-end dropdown-menu-card">
-                  <div class="card">
-                    <div class="card-header">
-                      <h3 class="card-title">Last updates</h3>
-                    </div>
-                    <div class="list-group list-group-flush list-group-hoverable">
-                      <div class="list-group-item">
-                        <div class="row align-items-center">
-                          <div class="col-auto"><span class="status-dot status-dot-animated bg-red d-block"></span></div>
-                          <div class="col text-truncate">
-                            <a href="#" class="text-body d-block">Example 1</a>
-                            <div class="d-block text-muted text-truncate mt-n1">
-                              Change deprecated html tags to text decoration classes (#29604)
-                            </div>
-                          </div>
-                          <div class="col-auto">
-                            <a href="#" class="list-group-item-actions">
-                              <!-- Download SVG icon from http://tabler-icons.io/i/star -->
-                              <svg xmlns="http://www.w3.org/2000/svg" class="icon text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></svg>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="list-group-item">
-                        <div class="row align-items-center">
-                          <div class="col-auto"><span class="status-dot d-block"></span></div>
-                          <div class="col text-truncate">
-                            <a href="#" class="text-body d-block">Example 2</a>
-                            <div class="d-block text-muted text-truncate mt-n1">
-                              justify-content:between ⇒ justify-content:space-between (#29734)
-                            </div>
-                          </div>
-                          <div class="col-auto">
-                            <a href="#" class="list-group-item-actions show">
-                              <!-- Download SVG icon from http://tabler-icons.io/i/star -->
-                              <svg xmlns="http://www.w3.org/2000/svg" class="icon text-yellow" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></svg>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="list-group-item">
-                        <div class="row align-items-center">
-                          <div class="col-auto"><span class="status-dot d-block"></span></div>
-                          <div class="col text-truncate">
-                            <a href="#" class="text-body d-block">Example 3</a>
-                            <div class="d-block text-muted text-truncate mt-n1">
-                              Update change-version.js (#29736)
-                            </div>
-                          </div>
-                          <div class="col-auto">
-                            <a href="#" class="list-group-item-actions">
-                              <!-- Download SVG icon from http://tabler-icons.io/i/star -->
-                              <svg xmlns="http://www.w3.org/2000/svg" class="icon text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></svg>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="list-group-item">
-                        <div class="row align-items-center">
-                          <div class="col-auto"><span class="status-dot status-dot-animated bg-green d-block"></span></div>
-                          <div class="col text-truncate">
-                            <a href="#" class="text-body d-block">Example 4</a>
-                            <div class="d-block text-muted text-truncate mt-n1">
-                              Regenerate package-lock.json (#29730)
-                            </div>
-                          </div>
-                          <div class="col-auto">
-                            <a href="#" class="list-group-item-actions">
-                              <!-- Download SVG icon from http://tabler-icons.io/i/star -->
-                              <svg xmlns="http://www.w3.org/2000/svg" class="icon text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></svg>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="nav-item dropdown">
-              <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-                <span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)"></span>
-                <div class="d-none d-xl-block ps-2">
-                  <div>Default User</div>
-                  <div class="mt-1 small text-muted">Dashboard User</div>
-                </div>
-              </a>
-              <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <a href="#" class="dropdown-item">Status</a>
-                <a href="./profile.html" class="dropdown-item">Profile</a>
-                <a href="#" class="dropdown-item">Feedback</a>
-                <div class="dropdown-divider"></div>
-                <a href="./settings.html" class="dropdown-item">Settings</a>
-                <a href="./sign-in.html" class="dropdown-item">Logout</a>
-              </div>
-            </div>
-          </div>
-        </div>
+                  <!-- <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" /><path d="M9 17v1a3 3 0 0 0 6 0v-1" /></svg> -->
+                  <!-- <span class="badge bg-red"></span> -->
+                  
+
+
       </header>
       <header class="navbar-expand-md">
         <div class="collapse navbar-collapse" id="navbar-menu">
@@ -253,7 +157,7 @@
               <div class="datagrid-title">Cloudflare authentication</div>
               <?php
                 // Read the content of the cloudfalre_api_status file
-                $apiStatus = file_get_contents('cloudflare_api_status.json');
+                $apiStatus = file_get_contents('/data/cloudflare-ip-checker/cloudflare_api_status.json');
                 // echo "DEBUG: apiStatus content: $apiStatus<br>"; // Debug output
                 
                 // Parse the JSON
@@ -261,12 +165,12 @@
                 // echo "DEBUG: apiStatusJson: " . print_r($apiStatusJson, true) . "<br>"; // Debug output
                 
                 // Check if the JSON result is false
-                if ($apiStatusJson && isset($apiStatusJson->result) && $apiStatusJson->result === false) {
-                  // Update the status color to red
-                  echo '<span class="status status-red">AUTH ERROR</span>';
-                } else {
-                  // Keep the status color as green
+                if ($apiStatusJson && isset($apiStatusJson->result) && $apiStatusJson->result === true) {
+                  // Update the status color to green
                   echo '<span class="status status-green">Active</span>';
+                } else {
+                  // Keep the status color as red
+                  echo '<span class="status status-red">AUTH ERROR</span>';
                 }
               ?>
             </div>
@@ -275,7 +179,7 @@
               <div class="datagrid-title">Discord Webhook</div>
               <?php
                 // Read the content of the cloudfalre_api_status file
-                $apiStatus = file_get_contents('webhook_status.json');
+                $apiStatus = file_get_contents('/data/cloudflare-ip-checker/webhook_status.json');
                 // echo "DEBUG: apiStatus content: $apiStatus<br>"; // Debug output
                 
                 // Parse the JSON
@@ -283,12 +187,12 @@
                 // echo "DEBUG: apiStatusJson: " . print_r($apiStatusJson, true) . "<br>"; // Debug output
                 
                 // Check if the JSON result is false
-                if ($apiStatusJson && isset($apiStatusJson->webhook_exists) && $apiStatusJson->webhook_exists === false) {
-                  // Update the status color to red
-                  echo '<span class="status status-red">AUTH ERROR</span>';
-                } else {
-                  // Keep the status color as green
+                if ($apiStatusJson && isset($apiStatusJson->webhook_exists) && $apiStatusJson->webhook_exists === true) {
+                  // Update the status color to green
                   echo '<span class="status status-green">Active</span>';
+                } else {
+                  // Keep the status color as red
+                  echo '<span class="status status-red">AUTH ERROR</span>';
                 }
               ?>
             </div>
@@ -301,6 +205,105 @@
                 ?>
               </div>
             </div>
+
+            <div class="datagrid-item">
+            <div class="datagrid-title">API Request Interval</div>
+            <div class="datagrid-content">
+                <?php
+                // Read and parse the JSON configuration file
+                $configJson = file_get_contents('/data/cloudflare-ip-checker/config.json');
+                $config = json_decode($configJson, true);
+
+                // Check if zone_id exists in the configuration
+                if (isset($config['request_time'])) {
+                    $zoneId = $config['request_time'];
+                    echo $zoneId;
+                } else {
+                    echo "Not found in configuration.";
+                }
+                ?>
+            </div>
+        </div>
+
+        <div class="datagrid-item">
+            <div class="datagrid-title">API KEY</div>
+            <div class="datagrid-content">
+                <?php
+                // Read and parse the JSON configuration file
+                $configJson = file_get_contents('/data/cloudflare-ip-checker/config.json');
+                $config = json_decode($configJson, true);
+
+                // Check if zone_id exists in the configuration
+                if (isset($config['api_key'])) {
+                    $zoneId = $config['api_key'];
+                    echo $zoneId;
+                } else {
+                    echo "Not found in configuration.";
+                }
+                ?>
+            </div>
+        </div>
+
+      <div class="datagrid-item">
+          <div class="datagrid-title">Webhook URL</div>
+          <div class="datagrid-content">
+              <?php
+              // Read and parse the JSON configuration file
+              $configJson = file_get_contents('config.json');
+              $config = json_decode($configJson, true);
+
+              // Check if discord_webhook exists in the configuration
+              if (isset($config['discord_webhook'])) {
+                  $webhookUrl = $config['discord_webhook'];
+                  $truncatedWebhook = strlen($webhookUrl) > 30 ? substr($webhookUrl, 0, 30) . '...' : $webhookUrl;
+                  echo '<span title="' . htmlspecialchars($webhookUrl) . '">' . htmlspecialchars($truncatedWebhook) . '</span>';
+              } else {
+                  echo "Not found in configuration.";
+              }
+              ?>
+          </div>
+      </div>
+
+
+            <div class="datagrid-item">
+            <div class="datagrid-title">Zone ID</div>
+            <div class="datagrid-content">
+                <?php
+                // Read and parse the JSON configuration file
+                $configJson = file_get_contents('/data/cloudflare-ip-checker/config.json');
+                $config = json_decode($configJson, true);
+
+                // Check if zone_id exists in the configuration
+                if (isset($config['zone_id'])) {
+                    $zoneId = $config['zone_id'];
+                    echo $zoneId;
+                } else {
+                    echo "Not found in configuration.";
+                }
+                ?>
+            </div>
+        </div>
+
+        <div class="datagrid-item">
+            <div class="datagrid-title">Email</div>
+            <div class="datagrid-content">
+                <?php
+                // Read and parse the JSON configuration file
+                $configJson = file_get_contents('/data/cloudflare-ip-checker/config.json');
+                $config = json_decode($configJson, true);
+
+                // Check if zone_id exists in the configuration
+                if (isset($config['email'])) {
+                    $zoneId = $config['email'];
+                    echo $zoneId;
+                } else {
+                    echo "Not found in configuration.";
+                }
+                ?>
+            </div>
+        </div>
+
+
 
             </div>
             <div class="datagrid-item">
@@ -315,33 +318,72 @@
 
             <!-- Card Records Start -->
             <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Cloudflare Records Tracked</h3>
-              </div>
-              <div class="card-body">
-              <?php
+  <div class="card-header">
+    <h3 class="card-title">Cloudflare Records Tracked 🚀</h3>
+  </div>
+  <div class="card-body">
+    <?php
+    $dns_records_json_file = 'dns_records.json'; // Update with the actual path to your JSON file
+    $dns_records_json = file_get_contents($dns_records_json_file);
+    $dns_records = json_decode($dns_records_json);
 
-                $dns_records_json_file = 'dns_records.json'; // Update with the actual path to your JSON file
-                $dns_records_json = file_get_contents($dns_records_json_file);
-                $dns_records = json_decode($dns_records_json);
+    // Loop through the DNS records
+    foreach ($dns_records as $record) {
+      $record_without_type = preg_replace('/\/[A-Za-z]+$/', '', $record);
 
-                echo "<ul>";
-                foreach ($dns_records as $record) {
-                  $record_without_type = preg_replace('/\/[A-Za-z]+$/', '', $record);
-                  echo "<li><a href='https://$record_without_type'>$record_without_type</a></li>";
-                }
-                echo "</ul>";
-              ?>
-            </div>
+      $url = "https://$record_without_type";
+      $headers = get_headers($url);
+      $status_code = intval(substr($headers[0], 9, 3));
+
+      // Get the last update timestamp from the JSON file
+      $update_info_file = "/data/cloudflare-ip-checker/updated_records/$record_without_type.json"; // Update with your path
+      $update_info = file_get_contents($update_info_file);
+      $update_info_json = json_decode($update_info, true);
+      $last_update = $update_info_json['update_timestamp'] ?? 'Unknown';
+
+      // Determine the color class based on status code
+      $color_class = "";
+      if ($status_code === 200) {
+        $color_class = "bg-green"; // Green for success
+      } elseif ($status_code === 400) {
+        $color_class = "bg-red";   // Red for bad request
+      } else {
+        $color_class = "bg-yellow"; // Yellow for unknown
+      }
+
+      echo '<div class="card">';
+      echo '<div class="card-status-start ' . $color_class . '"></div>'; // Apply color class
+      echo '<div class="card-body">';
+      echo "<h3 class='card-title'>A RECORD: $record_without_type ";
+
+      if ($status_code === 200) {
+        echo "<span class='badge bg-green-lt'>200 OK</span>";
+      } elseif ($status_code === 400) {
+        echo "<span class='badge bg-red-lt'>400 Bad Request</span>";
+      } else {
+        echo "<span class='badge bg-yellow-lt'>UNKNOWN</span>";
+      }
+
+      echo "</h3>";
+      echo "<a href='$url'>$record_without_type</a>";
+      echo "<p>Last Update: $last_update</p>"; // Display the last update timestamp
+      echo '</div>';
+      echo '</div>';
+      echo '<br></br>';
+    }
+    ?>
+  </div>
+</div>
             <!-- Card Records End -->
-            </div>
           </div>
         </div>
 
 
 
+
        <!-- Page body end -->
         </div>
+      </div>
         <footer class="footer footer-transparent d-print-none">
           <div class="container-xl">
             <div class="row text-center align-items-center flex-row-reverse">
@@ -363,7 +405,7 @@
                 <ul class="list-inline list-inline-dots mb-0">
                   <li class="list-inline-item">
                     Copyright Cloudflare IP Checker; 2023
-                    <a href="." class="link-secondary">Tabler</a>.
+                    <a href="." class="link-secondary">jtmb</a>.
                     All rights reserved.
                   </li>
                     </a>
