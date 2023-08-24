@@ -8,6 +8,8 @@ PUBLIC_IP=$(curl -s https://api.ipify.org)  # Get the current public IP
 DNS_RECORDS=($DNS_RECORDS)   # Array of DNS records to update
 REQUEST_TIME="$REQUEST_TIME" # Request time interval in seconds
 repo_url="https://github.com/jtmb/clouflare-ip-checker"
+DASHBOARD_USER="$DASHBOARD_USER"
+DASHBOARD_PASSWORD="$DASHBOARD_PASSWORD"
 
 # Define colors and formatting codes
 GREEN="\033[1;32m"
@@ -35,6 +37,8 @@ echo '{
   "email": "'"$EMAIL"'",
   "api_key": "'"$API_KEY"'",
   "discord_webhook": "'"$WEBHOOK_URL"'",
+  "DASHBOARD_USER": "'"$DASHBOARD_USER"'",
+  "DASHBOARD_PASSWORD": "'"$DASHBOARD_PASSWORD"'",
   "request_time": "'"$REQUEST_TIME"'"
 }' > /data/cloudflare-ip-checker/config.json
 

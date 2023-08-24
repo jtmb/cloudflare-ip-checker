@@ -42,6 +42,7 @@ COPY front-end /var/www/html
 
 # Configure supervisord
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY config/supervisord.conf /etc/supervisord.conf
 
 # Make sure files/folders needed by the processes are accessable when they run under the nobody user
 RUN mkdir /data/logs /data/cloudflare-ip-checker/updated_records/
