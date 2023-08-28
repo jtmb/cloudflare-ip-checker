@@ -44,7 +44,7 @@ include 'dist/php/sing-in-auth.php';
                             <label class="form-label">
                                 Password
                                 <span class="form-label-description">
-                                    <a href="https://github.com/jtmb/cloudflare-ip-checker/blob/master/readme.md#getting-started">I forgot password</a>
+                                    <a href="https://github.com/jtmb/cloudflare-ip-checker/blob/master/readme.md#changing-login-credentials">I forgot password</a>
                                 </span>
                             </label>
                             <div class="input-group input-group-flat">
@@ -83,7 +83,7 @@ include 'dist/php/sing-in-auth.php';
                     </div>
                 </div>
                 <div class="text-center text-muted mt-3">
-                    Don't have an account yet? <a href="https://github.com/jtmb/cloudflare-ip-checker/blob/master/readme.md#getting-started" tabindex="-1">Click here</a>
+                    Don't have an account yet? <a href="https://github.com/jtmb/cloudflare-ip-checker/blob/master/readme.md#changing-login-credentials" tabindex="-1">Click here</a>
                 </div>
             </div>
         </div>
