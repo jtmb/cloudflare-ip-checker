@@ -111,13 +111,16 @@ services:
             DASHBOARD_PASSWORD: admin
 ```
 <b>NEW</b> Run on Docker Compose with UI (this is the recommended way) by running the command "docker compose up -d".
+
 ```yaml
 version: '3.8'
 services:
     ip-checker:
         image: jtmb92/cloudflare-ip-checker:UI
         volumes:
-         - /path/to/logs:/data/logs 
+         - /path/to/logs:/data/logs
+        ports:
+        - '8081:8080'
         environment:
             EMAIL: 'your-email@example.com'
             API_KEY: 'your-cloudflare-api-key'
