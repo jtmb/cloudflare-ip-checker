@@ -1,5 +1,5 @@
 <?php
-// include 'dist/php/dashboard-auth.php';
+include 'dist/php/dashboard-auth.php';
 ?>
 
 <!doctype html>
@@ -435,8 +435,7 @@
       </div>
     </div>
     <!-- Libs JS -->
-    <!-- Tabler Core -->
-    <script src="./dist/js/get-records.js" defer></script>    
+    <!-- Tabler Core -->  
     <script src="./dist/js/tabler.min.js?1684106062" defer></script>
     <script src="./dist/js/demo.min.js?1684106062" defer></script>
     <script src="./dist/js/reveal-secrets.js" defer></script>

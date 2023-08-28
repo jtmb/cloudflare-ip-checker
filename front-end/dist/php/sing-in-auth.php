@@ -25,9 +25,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// // Check if user is already authenticated and show login form
-// if (isset($_SESSION['authenticated']) && $_SESSION['authenticated'] === true) {
-//     header('Location: /dashboard'); // Redirect to dashboard if already authenticated
-//     exit();
-// }
+// Handle logout
+if (isset($_GET['logout']) && $_GET['logout'] === 'true') {
+    session_unset();    // Unset all session variables
+    session_destroy();  // Destroy the session
+    header('Location: /'); // Redirect to sign-in page
+    exit();
+}
 ?>
