@@ -8,3 +8,5 @@
     docker buildx build . -t jtmb92/cloudflare_ip_checker --push --platform=linux/arm64,linux/amd64,linux/arm/v7
 # Build Multiplatform image Specific image with latest tag 
     docker buildx build . -t jtmb92/cloudflare_ip_checker:latest --push --platform=linux/arm64,linux/amd64,linux/arm/v7
+# Build Multiplatform image Specific image with UI tag
+    docker buildx build . -t jtmb92/cloudflare_ip_checker:UI --push --platform=linux/arm64,linux/amd64,linux/arm/v7
