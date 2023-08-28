@@ -1,5 +1,5 @@
 <?php
-include 'dist/php/dashboard-auth.php';
+// include 'dist/php/dashboard-auth.php';
 ?>
 
 <!doctype html>
@@ -135,12 +135,11 @@ include 'dist/php/dashboard-auth.php';
             <div class="input-icon">
               <span class="input-icon-addon">
                 <!-- Download SVG icon from http://tabler-icons.io/i/search -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
+                <!-- <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg> -->
                 </span>
-                  <form action="./" method="get" autocomplete="off" novalidate>
-                      <input type="text" value="<?php echo isset($_GET['searchInput']) ? $_GET['searchInput'] : ''; ?>"
-                            class="form-control" placeholder="Search…" aria-label="Search in website" id="searchInput" name="searchInput">
-                      </form>
+                <a href="#" id="toggleButton" class="btn">
+                    Show Secrets
+                </a>
                   </div>
         
     <!-- Page header -->
@@ -210,7 +209,7 @@ include 'dist/php/dashboard-auth.php';
             </div>
             <div class="datagrid-item">
               <div class="datagrid-title">Public IP</div>
-              <div class="datagrid-content">
+              <div class="datagrid-content hidden">
                 <?php
                   $publicIP = file_get_contents('https://api.ipify.org');
                   echo $publicIP;
@@ -219,8 +218,8 @@ include 'dist/php/dashboard-auth.php';
             </div>
 
             <div class="datagrid-item">
-            <div class="datagrid-title">API Request Interval</div>
-            <div class="datagrid-content">
+              <div class="datagrid-title">Request interval</div>
+              <div class="datagrid-content hidden">
                 <?php
                 // Read and parse the JSON configuration file
                 $configJson = file_get_contents('/data/cloudflare-ip-checker/config.json');
@@ -239,7 +238,7 @@ include 'dist/php/dashboard-auth.php';
 
         <div class="datagrid-item">
             <div class="datagrid-title">API KEY</div>
-            <div class="datagrid-content">
+            <div class="datagrid-content hidden">
                 <?php
                 // Read and parse the JSON configuration file
                 $configJson = file_get_contents('/data/cloudflare-ip-checker/config.json');
@@ -258,7 +257,7 @@ include 'dist/php/dashboard-auth.php';
 
       <div class="datagrid-item">
           <div class="datagrid-title">Webhook URL</div>
-          <div class="datagrid-content">
+          <div class="datagrid-content hidden">
               <?php
               // Read and parse the JSON configuration file
               $configJson = file_get_contents('/data/cloudflare-ip-checker/config.json');
@@ -279,7 +278,7 @@ include 'dist/php/dashboard-auth.php';
 
             <div class="datagrid-item">
             <div class="datagrid-title">Zone ID</div>
-            <div class="datagrid-content">
+            <div class="datagrid-content hidden">
                 <?php
                 // Read and parse the JSON configuration file
                 $configJson = file_get_contents('/data/cloudflare-ip-checker/config.json');
@@ -298,7 +297,7 @@ include 'dist/php/dashboard-auth.php';
 
         <div class="datagrid-item">
             <div class="datagrid-title">Email</div>
-            <div class="datagrid-content">
+            <div class="datagrid-content hidden">
                 <?php
                 // Read and parse the JSON configuration file
                 $configJson = file_get_contents('/data/cloudflare-ip-checker/config.json');
@@ -319,7 +318,7 @@ include 'dist/php/dashboard-auth.php';
 
             </div>
             <div class="datagrid-item">
-              <div class="datagrid-content">
+            <div class="datagrid-content hidden">
                 </span>
               </div>
             </div>
@@ -440,5 +439,6 @@ include 'dist/php/dashboard-auth.php';
     <script src="./dist/js/get-records.js" defer></script>    
     <script src="./dist/js/tabler.min.js?1684106062" defer></script>
     <script src="./dist/js/demo.min.js?1684106062" defer></script>
+    <script src="./dist/js/reveal-secrets.js" defer></script>
   </body>
 </html>

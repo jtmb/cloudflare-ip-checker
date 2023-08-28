@@ -38,13 +38,13 @@ include 'dist/php/sing-in-auth.php';
                     <form action="" method="post" autocomplete="off" novalidate>
                         <div class="mb-3">
                             <label class="form-label">Username</label>
-                            <input type="email" class="form-control" name="email" placeholder="your@email.com" autocomplete="off">
+                            <input type="email" class="form-control" name="email" placeholder="Your Account Name" autocomplete="off">
                         </div>
                         <div class="mb-2">
                             <label class="form-label">
                                 Password
                                 <span class="form-label-description">
-                                    <a href="./forgot-password.html">I forgot password</a>
+                                    <a href="https://github.com/jtmb/cloudflare-ip-checker/blob/master/readme.md#getting-started">I forgot password</a>
                                 </span>
                             </label>
                             <div class="input-group input-group-flat">
@@ -79,7 +79,7 @@ include 'dist/php/sing-in-auth.php';
                     </div>
                 </div>
                 <div class="text-center text-muted mt-3">
-                    Don't have an account yet? <a href="./link-to-instructions-on-setting-docker-login-user" tabindex="-1">Click here</a>
+                    Don't have an account yet? <a href="https://github.com/jtmb/cloudflare-ip-checker/blob/master/readme.md#getting-started" tabindex="-1">Click here</a>
                 </div>
             </div>
         </div>

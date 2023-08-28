@@ -62,6 +62,9 @@ USER nobody
 # Expose the port nginx is reachable on
 EXPOSE 8080
 
+ARG DASHBOARD_USER:admin
+ARG DASHBOARD_PASSWORD:changeme
+
 # Let supervisord start nginx & php-fpm
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
