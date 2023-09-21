@@ -26,7 +26,14 @@ sleep 1
 # Construct the DNS_RECORDS array in JSON format
 DNS_RECORDS_JSON="["
 for record in "${DNS_RECORDS[@]}"; do
-  DNS_RECORDS_JSON+="\"$record\","
+  # Check if the record ends with /0
+  if [[ "$record" == */0 ]]; then
+    # Remove the trailing /0 and add to DNS_RECORDS_JSON
+    modified_record="${record%/0}"
+    DNS_RECORDS_JSON+="\"$modified_record\","
+  else
+    DNS_RECORDS_JSON+="\"$record\","
+  fi
 done
 DNS_RECORDS_JSON=${DNS_RECORDS_JSON%,}  # Remove the trailing comma
 DNS_RECORDS_JSON+="]"
@@ -81,6 +88,13 @@ fi
     name=$(echo "$record" | cut -d'/' -f1)
     type=$(echo "$record" | cut -d'/' -f2)
 
+    # Set the "proxied" value based on whether the record ends with /0
+    if [[ "$record" == */0 ]]; then
+      json_payload="{\"type\":\"$type\",\"name\":\"$name\",\"content\":\"$PUBLIC_IP\"}"
+    else
+      json_payload="{\"type\":\"$type\",\"name\":\"$name\",\"content\":\"$PUBLIC_IP\"\"proxied\":\"true\"}"
+    fi
+
     # Retrieve DNS record information from Cloudflare API
     response=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records?type=$type&name=$name" \
       -H "X-Auth-Email: $EMAIL" \
@@ -112,7 +126,8 @@ fi
             -H "X-Auth-Email: $EMAIL" \
             -H "X-Auth-Key: $API_KEY" \
             -H "Content-Type: application/json" \
-            --data "{\"type\":\"$type\",\"name\":\"$name\",\"content\":\"$PUBLIC_IP\",\"proxied\":true}")
+            --data "$json_payload")
+
 
 
           echo -e "[$(date +"%Y-%m-%d %H:%M:%S")] ${RED}${BOLD}DNS Record ${GREEN}$name ($type)${RESET} has changed. ${YELLOW}${BOLD}Updating ...${RESET}"
@@ -137,9 +152,8 @@ fi
           -H "X-Auth-Email: $EMAIL" \
           -H "X-Auth-Key: $API_KEY" \
           -H "Content-Type: application/json" \
-          --data "{\"type\":\"$type\",\"name\":\"$name\",\"content\":\"$PUBLIC_IP\",\"ttl\":120,\"proxied\":true}")
-        
-
+          --data "$json_payload")
+ 
         echo -e "[$(date +"%Y-%m-%d %H:%M:%S")] ${WHITE}${BOLD}New Record Detected ! ${GREEN}$name ($type)${RESET} has been ${YELLOW}${BOLD}added to Cloudflare ${RESET} with IP: ${WHITE}${BOLD}$PUBLIC_IP${RESET}"
 
         RECORD_UPDATED=true
