@@ -204,6 +204,7 @@ The ID of the Cloudflare DNS zone where your records are managed. This identifie
 The URL of your Discord webhook. This is where notifications will be sent when IP changes are detected.
 ```yaml
     DNS_RECORDS: 'my.site.com/A site.com/A' #example of multiple list format entries
+        DNS_RECORDS: 'my.site.com/A site.com/A/0' #example of multiple list format entries with a non proxied record (add /0 for DNS only records)
 ```      
 A space-separated list of Cloudflare DNS records in the format "name/type". These records will be checked and updated if necessary.
 ```yaml
