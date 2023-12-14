@@ -27,6 +27,7 @@
     - [Running on Docker Compose](#running-on-docker-compose)
     - [Running on Docker Swarm](#running-on-docker-swarm)
 - [Environment Variables Explained](#environment-variables-explained)
+    - [Changing Login Credentials](#changing-login-credentials)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -50,9 +51,11 @@ This solution proves invaluable for those who self-host using a dynamic IP addre
 - <b>Fast</b> - API request total time on average is less than a second.
 - <b>Lightweight</b> - Alpine Container keeps the image size below 15 MB.
 - <b>Scalable</b> - Built with scale in mind, Docker Swarm compatible.
+- <b>NEW</b> - Now includes a fully featured admin dashboard with login session support.
+
 
 #### Example:
-
+![Alt text](src/img/image.png))
 ![Example](src/img/example.png)
 
 #### Discord Alerting:
@@ -70,6 +73,11 @@ This solution proves invaluable for those who self-host using a dynamic IP addre
 ### [Docker Image](https://hub.docker.com/r/jtmb92/cloudflare_ip_checker)
 ```docker
  docker pull jtmb92/cloudflare-ip-checker
+```
+
+### [Docker Image with UI Dashboard](https://hub.docker.com/r/jtmb92/cloudflare_ip_checker)
+```docker
+ docker pull jtmb92/cloudflare-ip-checker:UI
 ```
 ### Running on docker
 A simple docker run command gets your instance running.
@@ -92,6 +100,27 @@ services:
         image: jtmb92/cloudflare-ip-checker
         volumes:
          - /path/to/logs:/data/logs 
+        environment:
+            EMAIL: 'your-email@example.com'
+            API_KEY: 'your-cloudflare-api-key'
+            ZONE_ID: 'your-cloudflare-zone-id'
+            WEBHOOK_URL: 'your-discord-webhook-url'
+            DNS_RECORDS: 'my.site.com/A site.com/A'
+            REQUEST_TIME: '2m'
+            DASHBOARD_USER: admin
+            DASHBOARD_PASSWORD: admin
+```
+<b>NEW</b> Run on Docker Compose with UI (this is the recommended way) by running the command "docker compose up -d".
+
+```yaml
+version: '3.8'
+services:
+    ip-checker:
+        image: jtmb92/cloudflare-ip-checker:UI
+        volumes:
+         - /path/to/logs:/data/logs
+        ports:
+        - '8081:8080'
         environment:
             EMAIL: 'your-email@example.com'
             API_KEY: 'your-cloudflare-api-key'
@@ -175,6 +204,7 @@ The ID of the Cloudflare DNS zone where your records are managed. This identifie
 The URL of your Discord webhook. This is where notifications will be sent when IP changes are detected.
 ```yaml
     DNS_RECORDS: 'my.site.com/A site.com/A' #example of multiple list format entries
+        DNS_RECORDS: 'my.site.com/A site.com/A/0' #example of multiple list format entries with a non proxied record (add /0 for DNS only records)
 ```      
 A space-separated list of Cloudflare DNS records in the format "name/type". These records will be checked and updated if necessary.
 ```yaml
@@ -185,6 +215,14 @@ A space-separated list of Cloudflare DNS records in the format "name/type". Thes
 ```    
 The time to wait between IP checks. This determines the interval at which the script checks for IP changes.
 
+## Changing Login Credentials
+
+Login credentials are set here, if you need to change your password or forgot your password simply set these env variables and rebuild the container.
+
+```yaml
+    DASHBOARD_USER: admin #the default dashboard login username
+    DASHBOARD_PASSWORD: changeme #the default dashboard login password
+```    
 - ** <b>Make sure to provide the appropriate values for these variables when running the Docker container. This information is crucial for the script to function correctly.</b>
 
 ## Contributing
@@ -202,5 +240,5 @@ Please try to create bug reports that are:
 
 This project is licensed under the **GNU GENERAL PUBLIC LICENSE v3**. Feel free to edit and distribute this template as you like.
 
-See [LICENSE](LICENSE) for more information.
+See [LICENSE](LICENSE) for more information. 
 
