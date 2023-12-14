@@ -90,9 +90,9 @@ fi
 
     # Set the "proxied" value based on whether the record ends with /0
     if [[ "$record" == */0 ]]; then
-      json_payload="{\"type\":\"$type\",\"name\":\"$name\",\"content\":\"$PUBLIC_IP\"}"
+        json_payload="{\"type\":\"$type\",\"name\":\"$name\",\"content\":\"$PUBLIC_IP\"}"
     else
-      json_payload="{\"type\":\"$type\",\"name\":\"$name\",\"content\":\"$PUBLIC_IP\"\"proxied\":\"true\"}"
+        json_payload="{\"type\":\"$type\",\"name\":\"$name\",\"content\":\"$PUBLIC_IP\",\"proxied\":true}"
     fi
 
     # Retrieve DNS record information from Cloudflare API
